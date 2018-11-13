@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using ShoppingApp.Services.CustomerManagement.DAL;
 
-namespace CustomerManagement
+namespace ShoppingApp.Services.CustomerManagement
 {
     public class Startup
     {
@@ -24,6 +20,9 @@ namespace CustomerManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            string connStr = @"Server=(local);Database=ShoppingApp.Customers;Trusted_Connection=True;";
+            services.AddDbContext<CustomerContext>(options => options.UseSqlServer(connStr));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
